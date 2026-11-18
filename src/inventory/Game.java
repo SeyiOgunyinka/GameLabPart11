@@ -17,6 +17,7 @@ public class Game {
     public static Room getCurrentRoom() {
         return currentRoom;
     }
+
     public static void addInventoryItem(Item item) {
         if (item != null && !inventory.contains(item)) {
             inventory.add(item);
@@ -172,6 +173,7 @@ public class Game {
         }
     }
 
+    // UPDATED: Items now handle their own use() behavior.
     public static void useItem(String itemName) {
 
         Item item = null;
@@ -179,28 +181,12 @@ public class Game {
         for (Item i : inventory) {
             if (i.getName().equalsIgnoreCase(itemName)) {
                 item = i;
+                break;
             }
         }
 
         if (item == null) {
             print("You don't have that item.");
-        } else if (item.getName().equalsIgnoreCase("Key")) {
-
-            if (currentRoom.getName().equalsIgnoreCase("Living Room")) {
-
-                Room office = currentRoom.getExit(1);
-
-                if (office.isLocked()) {
-                    office.setLocked(false);
-                    print("You unlocked the Office!");
-                } else {
-                    print("The Office is already unlocked.");
-                }
-
-            } else {
-                print("You cannot use the key here.");
-            }
-
         } else {
             item.use();
         }
